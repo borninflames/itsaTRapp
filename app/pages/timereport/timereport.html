@@ -1,7 +1,12 @@
 <ion-navbar *navbar>
-  <ion-title>Time Report</ion-title>
+    <ion-title>Time Report</ion-title>
 </ion-navbar>
-
 <ion-content padding class="timereport">
-  <h2>Munkaid? könyvelése</h2>
+    <ion-searchbar [(ngModel)]="searchQuery" (input)="searchItems($event)" placeholder="Projekt keresÃ©se" cancelButtonText="MÃ©gsem"></ion-searchbar>
+    <ion-list radio-group>
+        <ion-list-header>
+            Projektek
+        </ion-list-header>
+        <button ion-item *ngFor="#project of projects" [navPush]="calendar" [navParams]="project">{{project.name}}</button>
+    </ion-list>    
 </ion-content>
