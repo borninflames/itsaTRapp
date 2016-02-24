@@ -1,19 +1,32 @@
 import {Type} from 'angular2/core';
 import {Page} from 'ionic-framework/ionic';
-import {Calendar} from '../calendar/calendar';
 
 @Page({
     templateUrl: 'build/pages/timereport/timereport.html',
 })
 export class TimeReport {
+    project: Project;
+    datetime: Date;
+    day: number;
+    month: number;
+    year: number;
+    hours: number;
 
     projects: Array<Project>;
-    searchQuery: string;
-    calendar: Type = Calendar;
+    days: Array<number>;
+    months: Array<number>;
+    years: Array<number>;
 
     constructor() {
-        this.searchQuery = '';
         this.getProjects();
+        this.getYears();
+        this.getMonths();
+        this.getDays();
+        let today = new Date();
+        this.datetime = today;
+        this.year = today.getFullYear();
+        this.month = today.getMonth();
+        this.day = today.getDate();
     }
 
     getProjects() {
@@ -23,27 +36,26 @@ export class TimeReport {
         }
     }
 
-    searchItems(searchbar) {
-        this.getProjects();
-
-        // set q to the value of the searchbar
-        var q = searchbar.value;
-
-        // if the value is an empty string don't filter the items
-        if (q.trim() == '') {
-            return;
+    getYears() {
+        this.years = [];
+        let startYear: number = new Date().getFullYear() - 10;
+        for (let i: number = startYear; i < startYear + 11; i++) {            
+            this.years.push(i);
         }
-
-        this.projects = this.projects.filter((v) => {
-            if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
-                return true;
-            }
-            return false;
-        })
     }
 
-    projectSelected(project: Project) {
-        console.log(project);
+    getMonths() {
+        this.months = [];
+        for (let i: number = 1; i < 13; i++) {
+            this.months.push(i);
+        }
+    }
+
+    getDays() {
+        this.days = [];
+        for (let i: number = 1; i < 32; i++) {
+            this.days.push(i);
+        }
     }
 }
 

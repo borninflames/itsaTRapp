@@ -1,12 +1,52 @@
 <ion-navbar *navbar>
     <ion-title>Time Report</ion-title>
+    <ion-buttons end>
+        <button>
+            Mentés
+            <ion-icon name="send"></ion-icon>
+        </button>
+    </ion-buttons>
 </ion-navbar>
 <ion-content padding class="timereport">
-    <ion-searchbar [(ngModel)]="searchQuery" (input)="searchItems($event)" placeholder="Projekt keresése" cancelButtonText="Mégsem"></ion-searchbar>
-    <ion-list radio-group>
-        <ion-list-header>
-            Projektek
-        </ion-list-header>
-        <button ion-item *ngFor="#project of projects" [navPush]="calendar" [navParams]="project">{{project.name}}</button>
-    </ion-list>    
+    <ion-item>
+        <ion-label>Projekt</ion-label>
+        <ion-select [(ngModel)]="project">
+            <ion-option *ngFor="#project of projects" [value]="project">{{project.name}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Dátum</ion-label>
+        <ion-select [(ngModel)]="day">
+            <ion-option *ngFor="#d of days" [value]="d">{{d}}</ion-option>
+        </ion-select>
+        <ion-select [(ngModel)]="month">
+            <ion-option *ngFor="#m of months" [value]="m">{{m}}</ion-option>
+        </ion-select>
+        <ion-select [(ngModel)]="year">
+            <ion-option *ngFor="#y of years" [value]="y">{{y}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Dátum2</ion-label>
+        <ion-input [(ngModel)]="datetime" type="date"></ion-input>
+        <input [(ngModel)]="datetime" type="date" />
+    </ion-item>
+    <ion-item>
+        <ion-label>Órák</ion-label>
+        <ion-input [(ngModel)]="hours" type="number"></ion-input>
+    </ion-item>
+
+    <ion-card>
+        <ion-card-header>
+            {{project?.name}} - {{project?.id}}
+        </ion-card-header>
+        <ion-card-content>
+            {{year}}.{{month}}.{{day}} napra {{hours}} óra könyvelve<br />
+            {{datetime}} napra {{hours}} óra könyvelve
+        </ion-card-content>
+    </ion-card>
+
+    <ion-toolbar position="bottom" primary>
+        <ion-title>Mentés</ion-title>
+    </ion-toolbar>
 </ion-content>
